@@ -6,8 +6,9 @@
 
 
 # pull constants from dat file
-f = open("const.dat", "r")
-f.close()
+with open("QAP Python/Modules/const.dat", "r") as f:
+    const = f.read()
+    print(const)
 
 
 # define functions 
