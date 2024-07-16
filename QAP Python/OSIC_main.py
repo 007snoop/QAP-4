@@ -23,15 +23,35 @@ with open("QAP Python/Modules/const.dat", "r") as f:
 # define functions 
 
 
-
+# gathering user data
 while True:
-    # main program loop
+    custFirstName = input("Enter Customer's First Name: ")
+
+    custLastName = input("Enter Customer's Last Name: ")
+
+    custAdress = input("Enter Customer's Address: ")
+
+    custCity = input("Enter Customer's City: ")
+
+    custProv = input("Enter Customer's Province: ")
+    # will set up with list validation later
+
+    custPostalCode = input("Enter Customer's Postal Code: ")
+
+    custPhoneNum = input("Enter Customer's Phone Number: ")
 
 
+    # gathering customer data
+    numCarsInsured = input("Enter number of cars to be insured: ")
 
+    extraLiab = input("Do you want Extra Liabilities? (y/n): ")
 
+    glassCov = input("Do you want Glass Coverage? (y/n): ")
 
+    loanerCar = input("Do you want loaner Car? (y/n): ")
 
+    
     break
+
 
 # house keeping at the end of the program
