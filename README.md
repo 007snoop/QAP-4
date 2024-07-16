@@ -11,7 +11,6 @@ This project is part of the Keyin Software Development course. It involves pulli
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Introduction
@@ -92,10 +91,6 @@ No special libraries are required to run this project. Ensure you have Python, a
 ## Contributing
 
 As this is a project for a coursework assignment, contributions are not expected. However, if you have suggestions or improvements, feel free to fork the repository and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
