@@ -36,52 +36,56 @@ def progQuest():
     return custQuestLst, carQuestLst
 def provLst(VALID_PROV, custProv):
     if custProv not in VALID_PROV:
-        print(f"\n Province Error -- Must be a valid province ie.{VALID_PROV.split(",")}")
+        print(f"\n Province Error -- Must be a valid province ie. {", ".join(VALID_PROV)}")
+
+def payMethod():
+    validPayMethod = ["Full", "Monthly", "Down Pay"]
+    return validPayMethod
 
 
 def clearScreen():
     os.system("cls" if os.name == "nt" else "clear")
 
+
+clearScreen()
+time.sleep(1)
+while True:
+    userName =  input("Enter your username: ").title()
+    if userName == "":
+        print("\n\nYou dont want to see your name pop up?\n\n")
+    else:
+        break
+    
+time.sleep(1)
+print(f"       welcome, {userName:<s}, This is your One Stop Insurance Company's Program!")
+time.sleep(5)
+# new screen
+clearScreen()
+
+print(f"            Now, {userName:<s}, I will guide you through the program.")
+time.sleep(1)
+print(f"              Please perpare for the following questions.")
+print(f"================================================================")
+time.sleep(1)
+# set up lists for questions
+custQuestLst, carQuestLst = progQuest()
+print("\nCustomer Questions: \n")
+for i in custQuestLst: 
+    print(f"{i}")
+print("\nInsurance Questions: \n")
+for i in carQuestLst:
+    print(f"{i}")
+
+print(f"\n\n{userName}, Please let me know when you are done reading and would like to continue.")
+time.sleep(1)
+while True:
+    doneReading = input("Are you done (Y)? ").upper().strip()
+    if doneReading == "Y": 
+        break
+
+clearScreen()
 # gathering customer data
 while True:
-    clearScreen()
-    time.sleep(1)
-    while True:
-        userName =  input("Enter your username: ")
-        if userName == "":
-            print("\n\nYou dont want to see your name pop up?\n\n")
-        else:
-            break
-    
-    time.sleep(1)
-    print(f"       welcome, {userName}, This is your One Stop Insurance Company's Program!")
-    time.sleep(5)
-    # new screen
-    clearScreen()
-
-    print(f"       Now, {userName}, I will guide you through the program.")
-    time.sleep(1)
-    print(f"              Please perpare for the following questions.")
-    print(f"================================================================")
-    time.sleep(1)
-    # set up lists for questions
-    custQuestLst, carQuestLst = progQuest()
-    print("\nCustomer Questions: \n")
-    for i in custQuestLst: 
-        print(f"{i}")
-    print("\nInsurance Questions: \n")
-    for i in carQuestLst:
-        print(f"{i}")
-    
-    print(f"\n\n{userName}, Please let me know when you are done reading and would like to continue.")
-    time.sleep(1)
-    while True:
-        doneReading = input("Are you done (Y)? ").upper().strip()
-        if doneReading == "Y": 
-            break
-
-    clearScreen()
-
     while True:
         custFirstName = input("\nEnter Customer's First Name: ")
         if custFirstName == "":
@@ -131,7 +135,7 @@ while True:
             break
 
 
-# gathering sales car data
+    # gathering sales car data
     numCarsInsured = input("\nEnter number of cars to be insured: ")
 
     extraLiab = input("\nDo you want Extra Liabilities? (y/n): ")
@@ -140,6 +144,12 @@ while True:
 
     loanerCar = input("\nDo you want loaner Car? (y/n): ")
 
+    while True:
+        custPayMethod = input(f"\nEnter How you want to pay? ").title()
+        if custPayMethod not in payMethod():
+            print(f"\nPay method not found, please enter one of the following:\n {", ".join(payMethod())}")
+        else:
+            break
 
 
     #ending the program
