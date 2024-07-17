@@ -148,6 +148,8 @@ while True:
         custPayMethod = input(f"\nEnter How you want to pay? ").title()
         if custPayMethod not in payMethod():
             print(f"\nPay method not found, please enter one of the following:\n {", ".join(payMethod())}")
+        elif custPayMethod == payMethod([2]):
+            downPayAmt = input("\n How much are you paying down?: ")
         else:
             break
 
