@@ -3,6 +3,9 @@
 # date(s): 2024-07-16 - 
 
 # import libraries
+import time
+import os
+
 
 # pull and set up constants from dat file
 with open("QAP Python/Modules/const.dat", "r") as f:
@@ -26,16 +29,59 @@ VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
 def blankError():
     print("\n blank Error -- cannot be blank \n")
 
+def progQuest():
+    custQuestLst = ["Customer First Name", "Customer Last Name", "Customer Street address", "Customer City", "Customer Province", "Customer Postal Code", "Customer Phone Number"]
 
-
+    carQuestLst = ["Number of Cars to Insure", "Extra Liability", "Glass Coverage", "Loaner Car"]
+    return custQuestLst, carQuestLst
 def provLst(VALID_PROV, custProv):
     if custProv not in VALID_PROV:
-        print("\n Province Error -- Must be a valid province")
+        print(f"\n Province Error -- Must be a valid province ie.{VALID_PROV.split(",")}")
 
-    
 
-# gathering user data
+def clearScreen():
+    os.system("cls" if os.name == "nt" else "clear")
+
+# gathering customer data
 while True:
+    clearScreen()
+    time.sleep(1)
+    while True:
+        userName =  input("Enter your username: ")
+        if userName == "":
+            print("\n\nYou dont want to see your name pop up?\n\n")
+        else:
+            break
+    
+    time.sleep(1)
+    print(f"       welcome, {userName}, This is your One Stop Insurance Company's Program!")
+    time.sleep(5)
+    # new screen
+    clearScreen()
+
+    print(f"       Now, {userName}, I will guide you through the program.")
+    time.sleep(1)
+    print(f"              Please perpare for the following questions.")
+    print(f"================================================================")
+    time.sleep(1)
+    # set up lists for questions
+    custQuestLst, carQuestLst = progQuest()
+    print("\nCustomer Questions: \n")
+    for i in custQuestLst: 
+        print(f"{i}")
+    print("\nInsurance Questions: \n")
+    for i in carQuestLst:
+        print(f"{i}")
+    
+    print(f"\n\n{userName}, Please let me know when you are done reading and would like to continue.")
+    time.sleep(1)
+    while True:
+        doneReading = input("Are you done (Y)? ").upper().strip()
+        if doneReading == "Y": 
+            break
+
+    clearScreen()
+
     while True:
         custFirstName = input("\nEnter Customer's First Name: ")
         if custFirstName == "":
@@ -49,30 +95,43 @@ while True:
             blankError()
         else:
             break
-
-    custAdress = input("\nEnter Customer's Address: ")
-
-    custCity = input("\nEnter Customer's City: ")
+    while True:
+        custAdress = input("\nEnter Customer's Street Address: ")
+        if custAdress == "":
+            blankError()
+        else:
+            break
+    
+    while True:
+        custCity = input("\nEnter Customer's City: ")
+        if custCity == "":
+            blankError()
+        else:
+            break
 
     while True:
         custProv = input("\nEnter Customer's Province: ").upper()
         provLst(VALID_PROV, custProv)
         if custProv in VALID_PROV:
             break
-        elif custProv == "":
+
+    
+    while True:
+        custPostalCode = input("\nEnter Customer's Postal Code: ")
+        if custPostalCode == "":
             blankError()
-        else: 
+        else:
+            break
+    
+    while True:
+        custPhoneNum = input("\nEnter Customer's Phone Number: ")
+        if custPhoneNum == "":
+            blankError()
+        else:
             break
 
 
-
-
-    custPostalCode = input("\nEnter Customer's Postal Code: ")
-
-    custPhoneNum = input("\nEnter Customer's Phone Number: ")
-
-
-# gathering customer data
+# gathering sales car data
     numCarsInsured = input("\nEnter number of cars to be insured: ")
 
     extraLiab = input("\nDo you want Extra Liabilities? (y/n): ")
