@@ -18,40 +18,74 @@ with open("QAP Python/Modules/const.dat", "r") as f:
         rateHST = dataLst[6].strip() # .15
         ProcFee = dataLst[7].strip() # 39.99
 
-
-
+# define constants 
+VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
 # define functions 
+def blankError():
+    print("\n blank Error -- cannot be blank \n")
 
+
+
+def provLst(VALID_PROV, custProv):
+    if custProv not in VALID_PROV:
+        print("\n Province Error -- Must be a valid province")
+
+    
 
 # gathering user data
 while True:
-    custFirstName = input("Enter Customer's First Name: ")
-
-    custLastName = input("Enter Customer's Last Name: ")
-
-    custAdress = input("Enter Customer's Address: ")
-
-    custCity = input("Enter Customer's City: ")
-
-    custProv = input("Enter Customer's Province: ")
-    # will set up with list validation later
-
-    custPostalCode = input("Enter Customer's Postal Code: ")
-
-    custPhoneNum = input("Enter Customer's Phone Number: ")
-
-
-    # gathering customer data
-    numCarsInsured = input("Enter number of cars to be insured: ")
-
-    extraLiab = input("Do you want Extra Liabilities? (y/n): ")
-
-    glassCov = input("Do you want Glass Coverage? (y/n): ")
-
-    loanerCar = input("Do you want loaner Car? (y/n): ")
-
+    while True:
+        custFirstName = input("\nEnter Customer's First Name: ")
+        if custFirstName == "":
+            blankError()
+        else:
+            break
     
-    break
+    while True:
+        custLastName = input("\nEnter Customer's Last Name: ")
+        if custLastName == "":
+            blankError()
+        else:
+            break
+
+    custAdress = input("\nEnter Customer's Address: ")
+
+    custCity = input("\nEnter Customer's City: ")
+
+    while True:
+        custProv = input("\nEnter Customer's Province: ").upper()
+        provLst(VALID_PROV, custProv)
+        if custProv in VALID_PROV:
+            break
+        elif custProv == "":
+            blankError()
+        else: 
+            break
+
+
+
+
+    custPostalCode = input("\nEnter Customer's Postal Code: ")
+
+    custPhoneNum = input("\nEnter Customer's Phone Number: ")
+
+
+# gathering customer data
+    numCarsInsured = input("\nEnter number of cars to be insured: ")
+
+    extraLiab = input("\nDo you want Extra Liabilities? (y/n): ")
+
+    glassCov = input("\nDo you want Glass Coverage? (y/n): ")
+
+    loanerCar = input("\nDo you want loaner Car? (y/n): ")
+
+
+
+    #ending the program
+    enterAnother = input("\nWould you like to process another insurance policy? (y/n): ").upper()
+    if enterAnother != "Y":
+        break
 
 
 # house keeping at the end of the program
+print(f"\n Thanks for using this program!\n")
