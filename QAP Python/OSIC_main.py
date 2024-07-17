@@ -3,8 +3,11 @@
 # date(s): 2024-07-16 - 
 
 # import libraries
+import time
+import os
 
-# pull and set up constants from dat file
+
+# pull and set up constants from dat file(s)
 with open("QAP Python/Modules/const.dat", "r") as f:
     for data in f:
         dataLst = data.split(",")
@@ -17,6 +20,14 @@ with open("QAP Python/Modules/const.dat", "r") as f:
         loanerCarCov = dataLst[5].strip() # 58.00
         rateHST = dataLst[6].strip() # .15
         ProcFee = dataLst[7].strip() # 39.99
+with open("QAP Python/Modules/claimsOld.dat", "r") as old:
+    for data in old:
+        oldLst = data.split(",")
+
+        claimNumOld = dataLst[0].strip()
+        claimDateOld = dataLst[1].strip()
+        claimCostOld = dataLst[2].strip()
+
 
 # define constants 
 VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
@@ -26,15 +37,66 @@ VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
 def blankError():
     print("\n blank Error -- cannot be blank \n")
 
+def progQuest():
+    custQuestLst = ["Customer First Name", "Customer Last Name", "Customer Street address", "Customer City", "Customer Province", "Customer Postal Code", "Customer Phone Number"]
 
-
+    carQuestLst = ["Number of Cars to Insure", "Extra Liability", "Glass Coverage", "Loaner Car"]
+    return custQuestLst, carQuestLst
 def provLst(VALID_PROV, custProv):
     if custProv not in VALID_PROV:
-        print("\n Province Error -- Must be a valid province")
+        print(f"\n Province Error -- Must be a valid province ie. {", ".join(VALID_PROV)}")
 
+def payMethod():
+    validPayMethod = ["Full", "Monthly", "Down Pay"]
+    return validPayMethod
+
+
+def clearScreen():
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+
+# screen clear outside for user input
+clearScreen()
+time.sleep(1)
+while True:
+    userName =  input("Enter your username: ").title()
+    if userName == "":
+        print("\n\nYou don't want to see your name pop up?\n\n")
+    else:
+        break
     
+time.sleep(1)
+print(f"\n\n       welcome, {userName:<s}, This is your One Stop Insurance Company's Program!")
+time.sleep(5)
+# new screen
+clearScreen()
 
-# gathering user data
+print(f"\n\n\n            Now, {userName:<s}, I will guide you through the program.")
+time.sleep(3)
+print(f"              Please perpare for the following questions.")
+print(f"================================================================")
+time.sleep(3)
+# set up lists for questions
+custQuestLst, carQuestLst = progQuest()
+print("\nCustomer Questions: \n")
+for i in custQuestLst:
+    time.sleep(0.7) 
+    print(f"{i}")
+print("\nInsurance Questions: \n")
+for i in carQuestLst:
+    time.sleep(0.7)
+    print(f"{i}")
+
+print(f"\n\n{userName}, Please let me know when you are done reading and would like to continue.")
+time.sleep(1)
+while True:
+    doneReading = input("Are you done (Y)? ").upper().strip()
+    if doneReading == "Y": 
+        break
+
+clearScreen()
+# gathering customer data
 while True:
     while True:
         custFirstName = input("\nEnter Customer's First Name: ")
@@ -49,37 +111,69 @@ while True:
             blankError()
         else:
             break
-
-    custAdress = input("\nEnter Customer's Address: ")
-
-    custCity = input("\nEnter Customer's City: ")
+    while True:
+        custAdress = input("\nEnter Customer's Street Address: ")
+        if custAdress == "":
+            blankError()
+        else:
+            break
+    
+    while True:
+        custCity = input("\nEnter Customer's City: ")
+        if custCity == "":
+            blankError()
+        else:
+            break
 
     while True:
         custProv = input("\nEnter Customer's Province: ").upper()
         provLst(VALID_PROV, custProv)
         if custProv in VALID_PROV:
             break
-        elif custProv == "":
+
+    
+    while True:
+        custPostalCode = input("\nEnter Customer's Postal Code: ")
+        if custPostalCode == "":
             blankError()
-        else: 
+        else:
+            break
+    
+    while True:
+        custPhoneNum = input("\nEnter Customer's Phone Number: ")
+        if custPhoneNum == "":
+            blankError()
+        else:
             break
 
 
+    # gathering sales car data
+    basicPrem = float(basicPrem)
+    discountAddCar = float(discountAddCar)
+    numCarsInsured = int(input("\nEnter number of cars to be insured: "))
+    if numCarsInsured == 1:
+        numCarsInsured = basicPrem
+    elif numCarsInsured > 1:
+        numCarsInsured = basicPrem * discountAddCar
+    else:
+        numCarsInsured = False
 
 
-    custPostalCode = input("\nEnter Customer's Postal Code: ")
+    extraLiab = input("\nDo you want Extra Liabilities? (y/n): ").upper()
 
-    custPhoneNum = input("\nEnter Customer's Phone Number: ")
+    glassCov = input("\nDo you want Glass Coverage? (y/n): ").upper()
 
+    loanerCar = input("\nDo you want loaner Car? (y/n): ").upper()
 
-# gathering customer data
-    numCarsInsured = input("\nEnter number of cars to be insured: ")
+    while True:
+        custPayMethod = input(f"\nEnter How you want to pay? ").title()
+        if custPayMethod not in payMethod():
+            print(f"\nPay method not found, please enter one of the following:\n {", ".join(payMethod())}")
+        elif custPayMethod == payMethod([2]):
+            downPayAmt = input("\n How much are you paying down?: ")
+        else:
+            break
 
-    extraLiab = input("\nDo you want Extra Liabilities? (y/n): ")
-
-    glassCov = input("\nDo you want Glass Coverage? (y/n): ")
-
-    loanerCar = input("\nDo you want loaner Car? (y/n): ")
 
 
 
