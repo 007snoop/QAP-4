@@ -20,6 +20,8 @@ with open("QAP Python/Modules/const.dat", "r") as f:
 
 # define constants 
 VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
+
+
 # define functions 
 def blankError():
     print("\n blank Error -- cannot be blank \n")
