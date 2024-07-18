@@ -1,3 +1,4 @@
+
 # QAP 4 - Data Processing Project
 
 This project is part of the Keyin Software Development course. It involves pulling data from files, processing the data, adding to the data, and printing the data in a formatted way.
@@ -95,3 +96,4 @@ As this is a project for a coursework assignment, contributions are not expected
 ## Contact
 
 Created by Colin - feel free to reach out via [your email](mailto:30kozak.coding@gmail.com) for any questions or feedback.
+
