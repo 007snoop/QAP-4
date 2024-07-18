@@ -5,7 +5,7 @@
 # import libraries
 import time
 import os
-
+import sys
 
 # pull and set up constants from dat file(s)
 with open("QAP Python/Modules/const.dat", "r") as f:
@@ -46,10 +46,6 @@ def provLst(VALID_PROV, custProv):
     if custProv not in VALID_PROV:
         print(f"\n Province Error -- Must be a valid province ie. {", ".join(VALID_PROV)}")
 
-def payMethod():
-    validPayMethod = ["Full", "Monthly", "Down Pay"]
-    return validPayMethod
-
 
 def clearScreen():
     os.system("cls" if os.name == "nt" else "clear")
@@ -79,11 +75,13 @@ print(f"================================================================")
 time.sleep(3)
 # set up lists for questions
 custQuestLst, carQuestLst = progQuest()
-print("\nCustomer Questions: \n")
+print("\n Customer Questions: \n")
+print("--------------------------")
 for i in custQuestLst:
     time.sleep(0.7) 
     print(f"{i}")
-print("\nInsurance Questions: \n")
+print("\n Insurance Questions: \n")
+print("--------------------------")
 for i in carQuestLst:
     time.sleep(0.7)
     print(f"{i}")
@@ -96,17 +94,19 @@ while True:
         break
 
 clearScreen()
+
+
 # gathering customer data
 while True:
     while True:
-        custFirstName = input("\nEnter Customer's First Name: ")
+        custFirstName = input("\nEnter Customer's First Name: ").title().strip()
         if custFirstName == "":
             blankError()
         else:
             break
     
     while True:
-        custLastName = input("\nEnter Customer's Last Name: ")
+        custLastName = input("\nEnter Customer's Last Name: ").title().strip()
         if custLastName == "":
             blankError()
         else:
@@ -151,36 +151,54 @@ while True:
     basicPrem = float(basicPrem)
     discountAddCar = float(discountAddCar)
     numCarsInsured = int(input("\nEnter number of cars to be insured: "))
-    if numCarsInsured == 1:
-        numCarsInsured = basicPrem
-    elif numCarsInsured > 1:
-        numCarsInsured = basicPrem * discountAddCar
-    else:
-        numCarsInsured = False
 
+    for carNum in range(numCarsInsured):
+        print(f"\n Car number: {carNum + 1}")
+        extraLiabCost = float(extraLiabCost)
+        extraLiab = input("\nDo you want Extra Liabilities? (y/n): ").upper()
+        if extraLiab == "Y":
+            extraLiab = extraLiabCost
 
-    extraLiab = input("\nDo you want Extra Liabilities? (y/n): ").upper()
+        glassCovCost = float(glassCovCost)
+        glassCov = input("\nDo you want Glass Coverage? (y/n): ").upper()
+        if glassCov == "Y":
+            glassCov = glassCovCost
 
-    glassCov = input("\nDo you want Glass Coverage? (y/n): ").upper()
+        loanerCar = input("\nDo you want loaner Car? (y/n): ").upper()
 
-    loanerCar = input("\nDo you want loaner Car? (y/n): ").upper()
-
-    while True:
-        custPayMethod = input(f"\nEnter How you want to pay? ").title()
-        if custPayMethod not in payMethod():
-            print(f"\nPay method not found, please enter one of the following:\n {", ".join(payMethod())}")
-        elif custPayMethod == payMethod([2]):
-            downPayAmt = input("\n How much are you paying down?: ")
-        else:
-            break
+        while True:
+            validPayMethod = ["Full", "Monthly", "Down Pay"]
+            custPayMethod = input(f"\n Enter How you want to pay? ").title()
+            if custPayMethod not in validPayMethod:
+                print(f"\nPay method not found, please enter one of the following:\n {", ".join(validPayMethod)}")
+            elif custPayMethod == validPayMethod[2]:
+                downPayAmt = int(input("\n How much are you paying down?: "))
+                time.sleep(.7)
+                if downPayAmt > 1:
+                    payRest = input(f"\n How are you playing the rest: \n {",".join(validPayMethod[0, 1])}?: ")
+            else:
+                break
 
 
 
 
     #ending the program
-    enterAnother = input("\nWould you like to process another insurance policy? (y/n): ").upper()
+    enterAnother = input("\n Would you like to process another insurance policy? (y/n): ").upper()
     if enterAnother != "Y":
         break
+
+    
+    # show the user that something is happening
+
+    # 1. Blinking message for the user
+    message = ("Saving progress...")
+    for _ in range(5): # sets the number of blinks
+        print(message, end='\r')
+        time.sleep(0.3) # sleep for the blink effect
+        sys.stdout.write("\033[2K\r\033[]") # 033 not 003 you idiot
+        time.sleep(0.3) # sleep for the blink effect
+    print()
+    print(f" -- \n Database Successfully save \n -- ")
 
 
 # house keeping at the end of the program
