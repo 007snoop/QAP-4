@@ -5,9 +5,9 @@
 # import libraries
 import time
 import os
+import sys
 
-
-# pull and set up constants from dat file
+# pull and set up constants from dat file(s)
 with open("QAP Python/Modules/const.dat", "r") as f:
     for data in f:
         dataLst = data.split(",")
@@ -20,6 +20,14 @@ with open("QAP Python/Modules/const.dat", "r") as f:
         loanerCarCov = dataLst[5].strip() # 58.00
         rateHST = dataLst[6].strip() # .15
         ProcFee = dataLst[7].strip() # 39.99
+with open("QAP Python/Modules/claimsOld.dat", "r") as old:
+    for data in old:
+        oldLst = data.split(",")
+
+        claimNumOld = dataLst[0].strip()
+        claimDateOld = dataLst[1].strip()
+        claimCostOld = dataLst[2].strip()
+
 
 # define constants 
 VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
@@ -36,61 +44,69 @@ def progQuest():
     return custQuestLst, carQuestLst
 def provLst(VALID_PROV, custProv):
     if custProv not in VALID_PROV:
-        print(f"\n Province Error -- Must be a valid province ie.{VALID_PROV.split(",")}")
+        print(f"\n Province Error -- Must be a valid province ie. {", ".join(VALID_PROV)}")
 
 
 def clearScreen():
     os.system("cls" if os.name == "nt" else "clear")
 
+
+
+# screen clear outside for user input
+clearScreen()
+time.sleep(1)
+while True:
+    userName =  input("Enter your username: ").title()
+    if userName == "":
+        print("\n\nYou don't want to see your name pop up?\n\n")
+    else:
+        break
+    
+time.sleep(1)
+print(f"\n\n       welcome, {userName:<s}, This is your One Stop Insurance Company's Program!")
+time.sleep(5)
+# new screen
+clearScreen()
+
+print(f"\n\n\n            Now, {userName:<s}, I will guide you through the program.")
+time.sleep(3)
+print(f"              Please perpare for the following questions.")
+print(f"================================================================")
+time.sleep(3)
+# set up lists for questions
+custQuestLst, carQuestLst = progQuest()
+print("\n Customer Questions: \n")
+print("--------------------------")
+for i in custQuestLst:
+    time.sleep(0.7) 
+    print(f"{i}")
+print("\n Insurance Questions: \n")
+print("--------------------------")
+for i in carQuestLst:
+    time.sleep(0.7)
+    print(f"{i}")
+
+print(f"\n\n{userName}, Please let me know when you are done reading and would like to continue.")
+time.sleep(1)
+while True:
+    doneReading = input("Are you done (Y)? ").upper().strip()
+    if doneReading == "Y": 
+        break
+
+clearScreen()
+
+
 # gathering customer data
 while True:
-    clearScreen()
-    time.sleep(1)
     while True:
-        userName =  input("Enter your username: ")
-        if userName == "":
-            print("\n\nYou dont want to see your name pop up?\n\n")
-        else:
-            break
-    
-    time.sleep(1)
-    print(f"       welcome, {userName}, This is your One Stop Insurance Company's Program!")
-    time.sleep(5)
-    # new screen
-    clearScreen()
-
-    print(f"       Now, {userName}, I will guide you through the program.")
-    time.sleep(1)
-    print(f"              Please perpare for the following questions.")
-    print(f"================================================================")
-    time.sleep(1)
-    # set up lists for questions
-    custQuestLst, carQuestLst = progQuest()
-    print("\nCustomer Questions: \n")
-    for i in custQuestLst: 
-        print(f"{i}")
-    print("\nInsurance Questions: \n")
-    for i in carQuestLst:
-        print(f"{i}")
-    
-    print(f"\n\n{userName}, Please let me know when you are done reading and would like to continue.")
-    time.sleep(1)
-    while True:
-        doneReading = input("Are you done (Y)? ").upper().strip()
-        if doneReading == "Y": 
-            break
-
-    clearScreen()
-
-    while True:
-        custFirstName = input("\nEnter Customer's First Name: ")
+        custFirstName = input("\nEnter Customer's First Name: ").title().strip()
         if custFirstName == "":
             blankError()
         else:
             break
     
     while True:
-        custLastName = input("\nEnter Customer's Last Name: ")
+        custLastName = input("\nEnter Customer's Last Name: ").title().strip()
         if custLastName == "":
             blankError()
         else:
@@ -131,21 +147,58 @@ while True:
             break
 
 
-# gathering sales car data
-    numCarsInsured = input("\nEnter number of cars to be insured: ")
+    # gathering sales car data
+    basicPrem = float(basicPrem)
+    discountAddCar = float(discountAddCar)
+    numCarsInsured = int(input("\nEnter number of cars to be insured: "))
 
-    extraLiab = input("\nDo you want Extra Liabilities? (y/n): ")
+    for carNum in range(numCarsInsured):
+        print(f"\n Car number: {carNum + 1}")
+        extraLiabCost = float(extraLiabCost)
+        extraLiab = input("\nDo you want Extra Liabilities? (y/n): ").upper()
+        if extraLiab == "Y":
+            extraLiab = extraLiabCost
 
-    glassCov = input("\nDo you want Glass Coverage? (y/n): ")
+        glassCovCost = float(glassCovCost)
+        glassCov = input("\nDo you want Glass Coverage? (y/n): ").upper()
+        if glassCov == "Y":
+            glassCov = glassCovCost
 
-    loanerCar = input("\nDo you want loaner Car? (y/n): ")
+        loanerCar = input("\nDo you want loaner Car? (y/n): ").upper()
+
+        while True:
+            validPayMethod = ["Full", "Monthly", "Down Pay"]
+            custPayMethod = input(f"\n Enter How you want to pay? ").title()
+            if custPayMethod not in validPayMethod:
+                print(f"\nPay method not found, please enter one of the following:\n {", ".join(validPayMethod)}")
+            elif custPayMethod == validPayMethod[2]:
+                downPayAmt = int(input("\n How much are you paying down?: "))
+                time.sleep(.7)
+                if downPayAmt > 1:
+                    payRest = input(f"\n How are you playing the rest: \n {",".join(validPayMethod[0, 1])}?: ")
+            else:
+                break
+
 
 
 
     #ending the program
-    enterAnother = input("\nWould you like to process another insurance policy? (y/n): ").upper()
+    enterAnother = input("\n Would you like to process another insurance policy? (y/n): ").upper()
     if enterAnother != "Y":
         break
+
+    
+    # show the user that something is happening
+
+    # 1. Blinking message for the user
+    message = ("Saving progress...")
+    for _ in range(5): # sets the number of blinks
+        print(message, end='\r')
+        time.sleep(0.3) # sleep for the blink effect
+        sys.stdout.write("\033[2K\r\033[]") # 033 not 003 you idiot
+        time.sleep(0.3) # sleep for the blink effect
+    print()
+    print(f" -- \n Database Successfully save \n -- ")
 
 
 # house keeping at the end of the program
