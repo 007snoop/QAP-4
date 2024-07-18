@@ -20,18 +20,10 @@ with open("QAP Python/Modules/const.dat", "r") as f:
         loanerCarCov = dataLst[5].strip() # 58.00
         rateHST = dataLst[6].strip() # .15
         ProcFee = dataLst[7].strip() # 39.99
-with open("QAP Python/Modules/claimsOld.dat", "r") as old:
-    for data in old:
-        oldLst = data.split(",")
-
-        claimNumOld = dataLst[0].strip()
-        claimDateOld = dataLst[1].strip()
-        claimCostOld = dataLst[2].strip()
 
 
 # define constants 
 VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
-
 
 # define functions 
 def blankError():
@@ -49,7 +41,6 @@ def provLst(VALID_PROV, custProv):
 
 def clearScreen():
     os.system("cls" if os.name == "nt" else "clear")
-
 
 
 # screen clear outside for user input
@@ -71,17 +62,17 @@ clearScreen()
 print(f"\n\n\n            Now, {userName:<s}, I will guide you through the program.")
 time.sleep(3)
 print(f"              Please perpare for the following questions.")
-print(f"================================================================")
+print(f"=" * 80)
 time.sleep(3)
 # set up lists for questions
 custQuestLst, carQuestLst = progQuest()
 print("\n Customer Questions: \n")
-print("--------------------------")
+print("-" * 26)
 for i in custQuestLst:
     time.sleep(0.7) 
     print(f"{i}")
 print("\n Insurance Questions: \n")
-print("--------------------------")
+print("-" * 26)
 for i in carQuestLst:
     time.sleep(0.7)
     print(f"{i}")
@@ -162,7 +153,7 @@ while True:
     rateHST = float(rateHST)
     validPayMethod = ["Full", "Monthly", "Down Pay"]
 
-    numCarsInsured = int(input("\nEnter number of cars to be insured: "))
+    numCarsInsured = int(input("\n Enter number of cars to be insured: "))
 
     for carNum in range(numCarsInsured):
         time.sleep(1)
@@ -177,16 +168,16 @@ while True:
         totalCarPrem += carPrem
 
         
-        extraLiab = input("\nDo you want Extra Liabilities? (y/n): ").upper()
+        extraLiab = input("\n Do you want Extra Liabilities? (y/n): ").upper()
         if extraLiab == "Y":
             totalExtraCost += extraLiabCost
 
         
-        glassCov = input("\nDo you want Glass Coverage? (y/n): ").upper()
+        glassCov = input("\n Do you want Glass Coverage? (y/n): ").upper()
         if glassCov == "Y":
             totalExtraCost += glassCovCost
 
-        loanerCar = input("\nDo you want loaner Car? (y/n): ").upper()
+        loanerCar = input("\n Do you want loaner Car? (y/n): ").upper()
         if loanerCar == "Y":
             totalExtraCost += loanerCarCov
 
@@ -199,7 +190,7 @@ while True:
         custPayMethod = input(f"\n Enter How you want to pay? {",".join(validPayMethod)}: ").title()
 
         if custPayMethod not in validPayMethod:
-            print(f"\nPay method not found, please enter one of the following:\n {", ".join(validPayMethod)}")
+            print(f"\n Pay method not found, please enter one of the following:\n {", ".join(validPayMethod)}")
 
         elif custPayMethod == validPayMethod[2]:
             downPayAmt = float(input("\n How much are you paying down?: "))
@@ -209,10 +200,10 @@ while True:
                 payRest = input(f"\n How are you playing the rest: \n {",".join(validPayMethod[0:2])}?: ").title()
 
                 if payRest in validPayMethod[:1]:
-                    payState = print(f"\nYou selected {custPayMethod} with a down payment of ${downPayAmt:,.2f} and will pay the rest via {payRest}.")
+                    payState = print(f"\n You selected {custPayMethod} with a down payment of ${downPayAmt:,.2f} and will pay the rest via {payRest}.")
                     break
                 else:
-                    print("\n \nInvalid payment method for the remaining amount. Please enter 'Full' or 'Monthly'.")
+                    print("\n \n Invalid payment method for the remaining amount. Please enter 'Full' or 'Monthly'.")
             else:
                 print(f"\n Dowm payemnt must be greater than 0.")
         else:
@@ -227,7 +218,7 @@ while True:
     # 1. Blinking message for the user
     message = ("Saving progress...")
     for _ in range(5): # sets the number of blinks
-        print(message, end='\r')
+        print(message, end="\r")
         time.sleep(0.3) # sleep for the blink effect
         sys.stdout.write("\033[2K\r\033[]") # 033 not 003 you idiot
         time.sleep(0.3) # sleep for the blink effect
@@ -257,8 +248,13 @@ while True:
     print("Claim #  Claim Date        Amount")
     print("---------------------------------")
     with open("QAP Python/Modules/claimsOld.dat", "r") as old:
-        for claim in old:
-            print(f"{claim['claim_number']:>5}    {claim['claim_date']}    ${claim['amount']:,.2f}")
+        for data in old:
+            oldLst = data.split(",")
+
+            claimNumOld = dataLst[0].strip()
+            claimDateOld = dataLst[1].strip()
+            claimCostOld = dataLst[2].strip()
+            print(f"{claimNumOld['claim_number']:>5}    {claimDateOld['claim_date']}    ${claimCostOld['amount']:,.2f}")
 
     #ending the program
     enterAnother = input("\n Would you like to process another insurance policy? (y/n): ").upper()
