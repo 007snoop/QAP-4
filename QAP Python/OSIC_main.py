@@ -12,19 +12,19 @@ with open("QAP Python/Modules/const.dat", "r") as f:
     for data in f:
         dataLst = data.split(",")
 
-        policyNum = dataLst[0].strip() # 1944
-        basicPrem = dataLst[1].strip() # 869.00
-        discountAddCar = dataLst[2].strip() # .25
-        extraLiabCost = dataLst[3].strip() # 130.00
-        glassCovCost = dataLst[4].strip() # 86.00
-        loanerCarCov = dataLst[5].strip() # 58.00
-        rateHST = dataLst[6].strip() # .15
-        ProcFee = dataLst[7].strip() # 39.99
+        policyNum = int(dataLst[0].strip()) # 1944
+        basicPrem = float(dataLst[1].strip()) # 869.00
+        discountAddCar = float(dataLst[2].strip()) # .25
+        extraLiabCost = float(dataLst[3].strip()) # 130.00
+        glassCovCost = float(dataLst[4].strip()) # 86.00
+        loanerCarCov = float(dataLst[5].strip()) # 58.00
+        rateHST = float(dataLst[6].strip()) # .15
+        ProcFee = float(dataLst[7].strip()) # 39.99
 
 
 # define constants 
-VALID_PROV = ["BC", "AB", "NL", "ON", "QC", "MB", "SK", "PE", "NB"]
-
+VALID_PROV = ["AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"]
+VALID_PAY_METHOD = ["Full", "Monthly", "Down Pay"]
 # define functions 
 def blankError():
     print("\n blank Error -- cannot be blank \n")
@@ -54,7 +54,7 @@ while True:
         break
     
 time.sleep(1)
-print(f"\n\n       welcome, {userName:<s}, This is your One Stop Insurance Company's Program!")
+print(f"\n\n              Welcome, {userName:<s}, This is your One Stop Insurance Company's Program!")
 time.sleep(5)
 # new screen
 clearScreen()
@@ -69,12 +69,12 @@ custQuestLst, carQuestLst = progQuest()
 print("\n Customer Questions: \n")
 print("-" * 26)
 for i in custQuestLst:
-    time.sleep(0.7) 
+    time.sleep(0.4) 
     print(f"{i}")
 print("\n Insurance Questions: \n")
 print("-" * 26)
 for i in carQuestLst:
-    time.sleep(0.7)
+    time.sleep(0.4)
     print(f"{i}")
 
 print(f"\n\n{userName}, Please let me know when you are done reading and would like to continue.")
@@ -86,74 +86,89 @@ while True:
 
 clearScreen()
 
+print(f" {userName}, Please now get ready for the Customer Detail Questions.")
 
 # gathering customer data
 while True:
+    print(f"-" * 26)
+    time.sleep(0.7)
     while True:
-        custFirstName = input("\nEnter Customer's First Name: ").title().strip()
+        custFirstName = input("\n Enter Customer's First Name: ").title().strip()
         if custFirstName == "":
             blankError()
         else:
             break
-    
+
+    time.sleep(0.2)
+
     while True:
-        custLastName = input("\nEnter Customer's Last Name: ").title().strip()
+        custLastName = input("\n Enter Customer's Last Name: ").title().strip()
         if custLastName == "":
             blankError()
         else:
             break
+
+    time.sleep(0.2)
+
     while True:
-        custAdress = input("\nEnter Customer's Street Address: ")
+        custAdress = input("\n Enter Customer's Street Address: ")
         if custAdress == "":
             blankError()
         else:
             break
-    
+
+    time.sleep(0.2)
+
     while True:
-        custCity = input("\nEnter Customer's City: ")
+        custCity = input("\n Enter Customer's City: ")
         if custCity == "":
             blankError()
         else:
             break
 
+    time.sleep(0.2)
+
     while True:
-        custProv = input("\nEnter Customer's Province: ").upper()
+        custProv = input("\n Enter Customer's Province: ").upper()
         provLst(VALID_PROV, custProv)
         if custProv in VALID_PROV:
             break
 
-    
+    time.sleep(0.2)
+
     while True:
-        custPostalCode = input("\nEnter Customer's Postal Code: ")
+        custPostalCode = input("\n Enter Customer's Postal Code: ")
         if custPostalCode == "":
             blankError()
         else:
             break
-    
+
+    time.sleep(0.2)
+
     while True:
-        custPhoneNum = input("\nEnter Customer's Phone Number: ")
+        custPhoneNum = input("\n Enter Customer's Phone Number: ")
         if custPhoneNum == "":
             blankError()
         else:
             break
 
-
+    clearScreen()
+    print(f" {userName}, Please now get ready for the Car Questions.")
+    print(f"-" * 26)
+    time.sleep(0.7)
     # gathering sales car data and doing calculations
     
+    monthlyPayment = 0
     totalCarPrem = 0
     totalExtraCost = 0
+    downPayAmt = 0
 
-    basicPrem = float(basicPrem)
-    discountAddCar = float(discountAddCar)
-    totalExtraCost = float(totalExtraCost)
-    totalCarPrem = float(totalCarPrem)
-    extraLiabCost = float(extraLiabCost)
-    glassCovCost = float(glassCovCost)
-    loanerCarCov = float(loanerCarCov)
-    rateHST = float(rateHST)
-    validPayMethod = ["Full", "Monthly", "Down Pay"]
-
-    numCarsInsured = int(input("\n Enter number of cars to be insured: "))
+    while True:
+        numCarsInsured = int(input("\n Enter number of cars to be insured: "))
+        if numCarsInsured == "":
+            print("Please enter number of cars to be insured: ")
+        else:
+            break
 
     for carNum in range(numCarsInsured):
         time.sleep(1)
@@ -187,29 +202,31 @@ while True:
         totalCost = totalInsurPrem + rateHST
 
     while True:
-        custPayMethod = input(f"\n Enter How you want to pay? {",".join(validPayMethod)}: ").title()
+        custPayMethod = input(f"\n Enter How you want to pay? {", ".join(VALID_PAY_METHOD)}: ").title()
 
-        if custPayMethod not in validPayMethod:
-            print(f"\n Pay method not found, please enter one of the following:\n {", ".join(validPayMethod)}")
+        if custPayMethod not in VALID_PAY_METHOD:
+            print(f"\n Pay method not found, please enter one of the following:\n {", ".join(VALID_PAY_METHOD)}")
 
-        elif custPayMethod == validPayMethod[2]:
+        elif custPayMethod == VALID_PAY_METHOD[2]:
+
             downPayAmt = float(input("\n How much are you paying down?: "))
             time.sleep(.7)
 
             if downPayAmt > 0:
-                payRest = input(f"\n How are you playing the rest: \n {",".join(validPayMethod[0:2])}?: ").title()
-
-                if payRest in validPayMethod[:1]:
-                    payState = print(f"\n You selected {custPayMethod} with a down payment of ${downPayAmt:,.2f} and will pay the rest via {payRest}.")
-                    break
-                else:
-                    print("\n \n Invalid payment method for the remaining amount. Please enter 'Full' or 'Monthly'.")
+                monthlyPayment = (totalInsurPrem - downPayAmt + ProcFee) / 8
             else:
                 print(f"\n Dowm payemnt must be greater than 0.")
+
+            payState = print(f"\n You selected {custPayMethod} with a down payment of ${downPayAmt:,.2f}.")
+            break
+
         else:
             print(f"\n You selected {custPayMethod}.")
-            downPayAmt = 0
-            monthlyPayment = (totalCost + ProcFee) / 8 if custPayMethod == validPayMethod[1] else 0
+            
+            if custPayMethod == VALID_PAY_METHOD[1:2]:
+                monthlyPayment = (totalCost + ProcFee) / 8 
+            else:
+                monthlyPayment = 0
             break      
 
 
@@ -225,10 +242,9 @@ while True:
     print()
     print(f" -- \n Database Successfully save \n -- ")
 
-    # Write to file
 
         # Generate and display receipt
-    clearScreen()
+   # clearScreen()
     print("\n" + "="*50)
     print(f"Receipt for Policy Number: {policyNum}")
     print("="*50)
@@ -242,28 +258,32 @@ while True:
     print(f"HST: ${tax:,.2f}")
     print(f"Total cost: ${totalCost:,.2f}")
     print(f"Down payment: ${downPayAmt:,.2f}")
-    if custPayMethod == "Monthly" or (custPayMethod == "Down Pay" and payRest == "Monthly"):
+    if custPayMethod == "Monthly" or (custPayMethod == "Down Pay"):
         print(f"Monthly payment (with processing fee): ${monthlyPayment:,.2f}")
     print("\nPrevious Claims:")
     print("Claim #  Claim Date        Amount")
-    print("---------------------------------")
+    print("-" * 32)
+    
     with open("QAP Python/Modules/claimsOld.dat", "r") as old:
         for data in old:
             oldLst = data.split(",")
 
-            claimNumOld = dataLst[0].strip()
-            claimDateOld = dataLst[1].strip()
-            claimCostOld = dataLst[2].strip()
-            print(f"{claimNumOld['claim_number']:>5}    {claimDateOld['claim_date']}    ${claimCostOld['amount']:,.2f}")
+            claimNumOld = oldLst[0].strip()
+            claimDateOld = oldLst[1].strip()
+            claimCostOld = oldLst[2].strip()
+            claimCostOld = float(claimCostOld)
 
+            print(f"{claimNumOld:>5}    {claimDateOld}       ${claimCostOld:,.2f}")
+
+    f = open("QAP Python/Modules/const.dat", "w")
+    policyNum += 1
+    policyNum = str(policyNum)
+    f.write(f"{policyNum}, {dataLst[1]}, {dataLst[2]}, {dataLst[3]}, {dataLst[4]}, {dataLst[5]}, {dataLst[6]}, {dataLst[7]}")
+    f.close()
     #ending the program
     enterAnother = input("\n Would you like to process another insurance policy? (y/n): ").upper()
     if enterAnother != "Y":
         break
-
-    
-
-
 
 # house keeping at the end of the program
 print(f"\n Thanks for using this program!\n")
