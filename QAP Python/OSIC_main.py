@@ -38,7 +38,6 @@ def provLst(VALID_PROV, custProv):
     if custProv not in VALID_PROV:
         print(f"\n Province Error -- Must be a valid province ie. {", ".join(VALID_PROV)}")
 
-
 def clearScreen():
     os.system("cls" if os.name == "nt" else "clear")
 
@@ -49,7 +48,7 @@ time.sleep(1)
 while True:
     userName =  input("Enter your username: ").title()
     if userName == "":
-        print("\n\nYou don't want to see your name pop up?\n\n")
+        print("\n\nAwwwwwweh, You don't want to see your name pop up?\n\n")
     else:
         break
     
@@ -60,10 +59,10 @@ time.sleep(5)
 clearScreen()
 
 print(f"\n\n\n            Now, {userName:<s}, I will guide you through the program.")
-time.sleep(3)
+time.sleep(2)
 print(f"              Please perpare for the following questions.")
 print(f"=" * 80)
-time.sleep(3)
+time.sleep(2)
 # set up lists for questions
 custQuestLst, carQuestLst = progQuest()
 print("\n Customer Questions: \n")
@@ -245,9 +244,9 @@ while True:
 
         # Generate and display receipt
    # clearScreen()
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print(f"Receipt for Policy Number: {policyNum}")
-    print("="*50)
+    print("=" * 50)
     print(f"Customer Name: {custFirstName} {custLastName}")
     print(f"Address: {custAdress}, {custCity}, {custProv}, {custPostalCode}")
     print(f"Phone Number: {custPhoneNum}")
@@ -275,11 +274,12 @@ while True:
 
             print(f"{claimNumOld:>5}    {claimDateOld}       ${claimCostOld:,.2f}")
 
-    f = open("QAP Python/Modules/const.dat", "w")
-    policyNum += 1
-    policyNum = str(policyNum)
-    f.write(f"{policyNum}, {dataLst[1]}, {dataLst[2]}, {dataLst[3]}, {dataLst[4]}, {dataLst[5]}, {dataLst[6]}, {dataLst[7]}")
-    f.close()
+    with open("QAP Python/Modules/const.dat", "w") as f:
+        policyNum = int(policyNum)
+        policyNum += 1
+        policyNum = str(policyNum)
+        f.write(f"{policyNum}, {dataLst[1]}, {dataLst[2]}, {dataLst[3]}, {dataLst[4]}, {dataLst[5]}, {dataLst[6]}, {dataLst[7]}")
+    
     #ending the program
     enterAnother = input("\n Would you like to process another insurance policy? (y/n): ").upper()
     if enterAnother != "Y":
