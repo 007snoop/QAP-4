@@ -3,6 +3,7 @@
 # date(s): 2024-07-16 - 
 
 # import libraries
+import datetime
 import time
 import os
 import sys
@@ -269,6 +270,7 @@ while True:
 
             claimNumOld = oldLst[0].strip()
             claimDateOld = oldLst[1].strip()
+            clainDateOld = datetime.datetime.strptime(claimDateOld, "%Y-%m-%d")
             claimCostOld = oldLst[2].strip()
             claimCostOld = float(claimCostOld)
 
