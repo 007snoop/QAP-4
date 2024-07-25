@@ -93,5 +93,5 @@ As this is a project for a coursework assignment, contributions are not expected
 
 ## Contact
 
-Created by Colin - feel free to reach out via [your email](mailto:30kozak.coding@gmail.com) for any questions or feedback.
+Created by Colin - feel free to reach out via [email](mailto:30kozak.coding@gmail.com) for any questions or feedback.
 
