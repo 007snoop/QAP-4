@@ -33,11 +33,7 @@ This project is designed to demonstrate skills in Python, JavaScript, HTML, and 
 
 ### Project 2: GitHub
 - **Objective:** Create a GitHub repository for the QAP 4 files.
-- **Requirements:**
-  - Public repository named `QAP-4-XXX` (where XXX are your initials).
-  - Include a README file.
-  - Upload Python program(s) and data files.
-  - Submit the repository URL to instructors.
+
 
 ### Project 3: JavaScript
 - **Objective:** Create a JavaScript object for a motel customer.
@@ -50,12 +46,14 @@ This project is designed to demonstrate skills in Python, JavaScript, HTML, and 
 - **Objective:** Create an ERD for Sleep-Tite Motel.
 - **Requirements:**
   - Track rooms, bookings, and revenues.
-  - Include a defaults file (`STDef.dat`) for values.
   - Room status, bookings, revenue, and supplies files/tables.
   - Identify and justify 2-3 additional fields for the ERD.
 
-## Technologies
+## Technologies & Languages used
 
+- Visual Studio Code
+- Mac Sonoma 14.5
+- Chip M1
 - Python
 - JavaScript
 - HTML
