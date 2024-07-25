@@ -64,8 +64,8 @@ class Customer {
     const mailingAddressObj = {
       street: mailingAddress[0].trim(),
       city: mailingAddress[1].trim(),
-      state: mailingAddress[2].trim(),
-      zip: mailingAddress[3].trim()
+      province: mailingAddress[2].trim(),
+      postalCode: mailingAddress[3].trim()
     };
   
     // Create Customer object

@@ -3,6 +3,7 @@
 # date(s): 2024-07-16 - 
 
 # import libraries
+import datetime
 import time
 import os
 import sys
@@ -201,7 +202,7 @@ while True:
         totalCost = totalInsurPrem + rateHST
 
     while True:
-        custPayMethod = input(f"\n Enter How you want to pay? {", ".join(VALID_PAY_METHOD)}: ").title()
+        custPayMethod = input(f"\n Enter How you want to pay? (if you are paying down, Please select 'Down Pay' now)\n{", ".join(VALID_PAY_METHOD)}: ").title()
 
         if custPayMethod not in VALID_PAY_METHOD:
             print(f"\n Pay method not found, please enter one of the following:\n {", ".join(VALID_PAY_METHOD)}")
@@ -243,25 +244,27 @@ while True:
 
 
         # Generate and display receipt
-   # clearScreen()
+    clearScreen()
     print("\n" + "=" * 50)
-    print(f"Receipt for Policy Number: {policyNum}")
+    print(f" " * 9 + f"Receipt for Policy Number: {policyNum}")
     print("=" * 50)
-    print(f"Customer Name: {custFirstName} {custLastName}")
-    print(f"Address: {custAdress}, {custCity}, {custProv}, {custPostalCode}")
-    print(f"Phone Number: {custPhoneNum}")
-    print(f"\nNumber of Cars Insured: {numCarsInsured}")
-    print(f"Total premium: ${totalCarPrem:,.2f}")
-    print(f"Total extra costs: ${totalExtraCost:,.2f}")
-    print(f"Total insurance premium: ${totalInsurPrem:,.2f}")
-    print(f"HST: ${tax:,.2f}")
-    print(f"Total cost: ${totalCost:,.2f}")
-    print(f"Down payment: ${downPayAmt:,.2f}")
+    custName = custFirstName + " " + custLastName
+    print(f"Customer Name:                        {custName:<20s}")
+    custFullAddress = custAdress + ", " + custCity + ", " + custProv + ", " + custPostalCode
+    print(f"Address:          {custFullAddress:<29s}")
+    print(f"Phone Number:                         {custPhoneNum:<10s}")
+    print(f"\nNumber of Cars Insured:                          {numCarsInsured}")
+    print(f"Total premium:                            ${totalCarPrem:<6,.2f}")
+    print(f"Total extra costs:                         ${totalExtraCost:<6,.2f}")
+    print(f"Total insurance premium:                   ${totalInsurPrem:<6,.2f}")
+    print(f"HST:                                        ${tax:<6,.2f}")
+    print(f"Total cost:                                ${totalCost:<6,.2f}")
+    print(f"Down payment:                               ${downPayAmt:<6,.2f}")
     if custPayMethod == "Monthly" or (custPayMethod == "Down Pay"):
-        print(f"Monthly payment (with processing fee): ${monthlyPayment:,.2f}")
+        print(f"Monthly payment (with processing fee):        ${monthlyPayment:<6,.2f}")
     print("\nPrevious Claims:")
     print("Claim #  Claim Date        Amount")
-    print("-" * 32)
+    print(f"-" * 33)
     
     with open("QAP Python/Modules/claimsOld.dat", "r") as old:
         for data in old:
@@ -269,6 +272,7 @@ while True:
 
             claimNumOld = oldLst[0].strip()
             claimDateOld = oldLst[1].strip()
+            clainDateOld = datetime.datetime.strptime(claimDateOld, "%Y-%m-%d")
             claimCostOld = oldLst[2].strip()
             claimCostOld = float(claimCostOld)
 
@@ -280,6 +284,9 @@ while True:
         policyNum = str(policyNum)
         f.write(f"{policyNum}, {dataLst[1]}, {dataLst[2]}, {dataLst[3]}, {dataLst[4]}, {dataLst[5]}, {dataLst[6]}, {dataLst[7]}")
     
+    with open("QAP Python/Modules/OSIC_Results.dat", "a") as f:
+        f.write(f"{custName}, {custFullAddress}, {custPhoneNum}, {totalInsurPrem}")
+
     #ending the program
     enterAnother = input("\n Would you like to process another insurance policy? (y/n): ").upper()
     if enterAnother != "Y":
