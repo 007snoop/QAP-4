@@ -11,8 +11,7 @@ class Customer {
       this.checkOutDate = new Date(checkOutDate);
     }
   
-    // Method to calculate age
-    getAge() {
+    getAge(age) {
       const today = new Date();
       let age = today.getFullYear() - this.birthDate.getFullYear();
       const monthDiff = today.getMonth() - this.birthDate.getMonth();
@@ -22,14 +21,12 @@ class Customer {
       return age;
     }
   
-    // Method to calculate duration of stay
     getStayDuration() {
       const duration = this.checkOutDate - this.checkInDate;
       const days = Math.ceil(duration / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
       return days;
     }
   
-    // Method to create a descriptive string
     getDescription() {
       return `
         Customer Name: ${this.name}<br>
@@ -46,11 +43,9 @@ class Customer {
     }
   }
   
-  // Function to handle form submission
   function handleFormSubmit(event) {
     event.preventDefault();
   
-    // Get values from form
     const name = document.getElementById('name').value;
     const birthDate = document.getElementById('birthDate').value;
     const gender = document.getElementById('gender').value;
@@ -68,7 +63,7 @@ class Customer {
       postalCode: mailingAddress[3].trim()
     };
   
-    // Create Customer object
+    // customer object
     const customer = new Customer(
       name,
       birthDate,
@@ -81,7 +76,7 @@ class Customer {
       checkOutDate
     );
   
-    // Display customer information
+    // display customer information
     document.getElementById('customer-info').innerHTML = customer.getDescription();
   }
   
